@@ -18,126 +18,129 @@
                 background-color: #171c2d;
             }
 
-            header {
-                position: fixed;
-                top: 0;
-                padding-left: 3%;
-                padding-top: 3px;
-                color: #fff;
-                background-color: #fec837;
-                font-size: 1.8em;
-                width: 100%;
-                height: 40px;
-            }
-
-            header p {
-                display: inline-block;
-                font-size: 1.1em;
-            }
-
-            header nav {
-                float: right;
-            }
-
-            header nav a {
-                text-decoration: none;
-                color: #171c2d;
-                font-size: 0.6em;
-                position: relative;
-                right: 10%;
-                top: 3px;
-            }
-
             .janela-inicial {
                 text-align: center;
-                background-color: #b9cbc9;
-                width: 95%;
-                height: 420px;
-                margin-left: 2.5%;
-                margin-top: 60px;
+                margin-top: 10px;
                 display: none;
-                border-radius: 3px;
-                box-shadow: 2px 2px #749593;
-            }
-
-            .janela-inicial textarea {
-                margin-top: 2px;
-                width: 90%;
-                height: 380px;
-                background-color: #fff;
                 border-radius: 3px;
             }
 
             .janela-inicial button {
-                width: 40%;
+                width: 95%;
                 height: 25px;
                 border-radius: 3px;
                 background-color: #fd9878;
                 border-color: #fd9878;
-                float: left;
-                margin-left: 5%;
+                float: center;
                 margin-top: 3px;
             }
 
+            .janela-inicial section {
+                margin-top: 2px;
+                width: 95%;
+                height: 455px;
+                background-color: #171c2d;
+                color: #fff;
+                border: 1px solid #797472;
+                border-right: 10px solid #797472;
+                border-radius: 3px;
+                margin-left: 2.5%;
+                padding-top: 4px;
+            }
+
+            .janela-inicial section textarea {
+                width: 95%;
+                height: 440px;
+                background-color: #171c2d;
+                color: #fff;
+                border-radius: 3px;
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+            }
+
             .janela-relatos {
-                margin-top: 60px;
                 text-align: center;
+                margin-top: 10px;
             }
 
             .local-relatos {
                 overflow-x: auto;
                 white-space: nowrap;
                 float: left;
+                width: 95%;
+                height: 465px;
+                margin-top: 2px;
+                border: 1px solid #797472;
+                border-right: 10px solid #797472;
+                border-radius: 3px;
+                margin-left: 2.5%;
+                padding-top: 4px;
+                padding-right: 2%;
             }
 
             .janela-relatos textarea {
-                margin-top: 5px;
+                margin-top: 2px;
+                margin-left: 2%;
                 width: 90%;
-                height: 400px;
-                background-color: #f7ebca;
-                margin-left: 5%;
+                height: 445px;
+                background-color: #171c2d;
+                color: #fff;
+                border-radius: 3px;
+                background-image: repeating-linear-gradient(0deg, transparent, transparent 20px, #fff 20px, #fd9878 21px);
+                background-attachment: local;
+                line-height: 18px; 
+                padding: 4px;
+                font-size: 13px;
             }
 
             .janela-relatos button {
-                width: 40%;
+                width: 95%;
                 height: 25px;
                 border-radius: 3px;
                 background-color: #fd9878;
                 border-color: #fd9878;
-                float: left;
-                margin-left: 5%;
+                float: center;
                 margin-top: 3px;
             }
 
             footer {
                 position: fixed;
-                bottom: 0; 
-                color: #fff;
-                background-color: #fec837;
+                bottom: 0;
+                padding-left: 3%;
+                padding-top: 3px;
+                color: #fd9878;
+                font-size: 1.8em;
                 width: 100%;
-                height: 35px;
-                text-align: center;
-                padding-top: 2px;
-                border-top-right-radius: 10px;
-                border-top-left-radius: 10px;
+                height: 40px;
+            }
+
+            footer nav {
+                float: right;
+            }
+
+            footer nav a {
+                text-decoration: none;
+                font-size: 0.6em;
+                position: relative;
+                top: 10px;
+                right: 10%;
+                color: #fff;
+                margin-left: 10px;
+                float: right;
+            }
+
+            footer p {
+                display: inline-block;
             }
         </style>
     </head>
     <body>
-        <header>
-            <p>Enter</p>
-            <nav>
-                <a onclick="Inicio()">Escrever</a>
-                <a onclick="MostrarRelatos()">Relatos</a>
-            </nav>
-        </header>
-
-        <article class="fundo">
-            <section id="janela-inicial" class="janela-inicial">
-                <button onclick="EnviarRelato()">Enviar Relato</button>
+        <section id="janela-inicial" class="janela-inicial">
+            <button onclick="EnviarRelato()">Enviar Relato</button>
+            <section>
                 <textarea id="relato" placeholder=" digite seu dia aqui..."></textarea>
             </section>
-        </article>
+        </section>
 
         <article id="janela-relatos" class="janela-relatos">
             <button onclick="ApagarRelato()">Apagar Relato</button>
@@ -146,7 +149,13 @@
             </section> 
         </article> 
 
-        <footer><strong>@netun0</strong></footer>
+        <footer>
+            <p>Enter</p>
+            <nav>
+                <a onclick="Inicio()">Escrever</a>
+                <a onclick="MostrarRelatos()">Relatos</a>
+            </nav>
+        </footer>
 
         <script>
             let relato = document.getElementById("relato");
@@ -157,7 +166,7 @@
             let Relatos = [];
 
             function EnviarRelato() {
-                Relatos.push(relato.value);
+                Relatos.unshift(relato.value);
                 localStorage.relatos = Relatos;
                 relato.value = "";
             }
