@@ -23,6 +23,8 @@
                 margin-top: 10px;
                 display: none;
                 border-radius: 3px;
+
+                display: none;
             }
 
             .janela-inicial button {
@@ -65,6 +67,8 @@
             .janela-relatos {
                 text-align: center;
                 margin-top: 10px;
+
+                display: none;
             }
 
             .local-relatos {
@@ -107,6 +111,55 @@
                 background-color: #e67a7a;
             }
 
+            .janela-agenda {
+                text-align: center;
+                padding-top: 20px;
+                padding-left: 5%;
+            }
+
+            .section-publish {
+                border: 1px solid #000;
+                border-radius: 3px;
+                width: 95%;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                background-color: #fefeb8;
+            }
+
+            .section-publish button {
+                width: 25%;
+                background-color: #fff;
+            }
+
+            .local-agenda {
+                overflow-y: auto;
+                float: left;
+                width: 95%;
+                height: 430px;
+                margin-top: 2px;
+                border: 1px solid #797472;
+                border-right: 10px solid #797472;
+                border-radius: 3px;
+                padding-top: 4px;
+            }
+
+            .local-agenda textarea {
+                width: 95%;
+                height: 30px;
+                font-size: 1.3em;
+            }
+
+            .local-agenda button {
+                width: 95%;
+                height: 30px;
+                margin-top: 5px;
+                margin-bottom: 5px;
+                background-color: #fff;
+                border: 1px solid #000;
+                float: center;
+                margin-top: 3px;
+            }
+
             footer {
                 position: fixed;
                 bottom: 0;
@@ -139,12 +192,12 @@
         </style>
     </head>
     <body>
-        <section id="janela-inicial" class="janela-inicial">
+        <article id="janela-inicial" class="janela-inicial">
             <button onclick="EnviarRelato()">Enviar Relato</button>
             <section>
                 <textarea id="relato" placeholder=" digite seus planos aqui..."></textarea>
             </section>
-        </section>
+        </article>
 
         <article id="janela-relatos" class="janela-relatos">
             <button onclick="ApagarRelato()">Apagar Relato</button>
@@ -153,15 +206,65 @@
             </section> 
         </article> 
 
+        <article id="janela-agenda" class="janela-agenda">
+            <section class="section-publish">
+                <input type="text" id="texto_tarefa">
+                <button onclick="PublicarTarefa()">Publish</button>
+            </section>
+            <section class="local-agenda" id="local-agenda">
+                <button onclick="ApagarTarefa()">Apagar Tarefa</button>
+            </section>
+        </article>
+
         <footer>
             <p>Enter</p>
             <nav>
                 <a onclick="Inicio()">Escrever</a>
                 <a onclick="MostrarRelatos()">Relatos</a>
+                <a onclick="Agenda()">Agenda</a>
             </nav>
         </footer>
 
         <script>
+            // AML - Agenda
+            let texto_tarefa = document.getElementById("texto_tarefa");
+            let local_agenda = document.getElementById("local-agenda");
+
+            let Tarefas = [];
+
+            function PublicarTarefa() {
+                Tarefas.push(texto_tarefa.value);
+                localStorage.tarefas = Tarefas;
+
+                let tarefa = document.createElement("textarea");
+                tarefa.value = ` ${texto_tarefa.value}`;
+                local_agenda.appendChild(tarefa);
+                texto_tarefa.value = "";
+            }
+
+            function ApagarTarefa() {
+                let storage = localStorage.getItem("tarefas");
+                Tarefas = storage.split(",");
+                Tarefas.shift();
+                localStorage.tarefas = Tarefas;
+                Reiniciar();
+            }
+
+            function CarregarAgenda() {
+                if (localStorage.tarefas) {
+                    let storage = localStorage.getItem("tarefas");
+                    Tarefas = storage.split(",");
+
+                    for (let valor_tarefa of Tarefas) {
+                        let tarefa = document.createElement("textarea");
+                        tarefa.value = ` ${valor_tarefa}`;
+                        local_agenda.appendChild(tarefa);
+                    }
+                }
+            }
+            window.addEventListener("load", CarregarAgenda);
+
+            // AML - Relatos 
             let relato = document.getElementById("relato");
             let janela_inicial = document.getElementById("janela-inicial");
             let janela_relatos = document.getElementById("janela-relatos");
@@ -175,7 +278,7 @@
                 relato.value = "";
                 janela_inicial.style.display = "none";
                 janela_relatos.style.display = "block";
-                MostrarRelatos();
+                Reiniciar();
             }
 
             function ApagarRelato() {
@@ -183,7 +286,11 @@
                 Relatos = storage.split(",");
                 Relatos.shift();
                 localStorage.relatos = Relatos;
-                MostrarRelatos();
+                Reiniciar();
+            }
+
+            function Agenda() {
+                
             }
 
             function Inicio() {
@@ -191,7 +298,7 @@
                 janela_relatos.style.display = "none";
             }
 
-            function MostrarRelatos() {
+            function Reiniciar() {
                 window.location.reload();
             }
 
