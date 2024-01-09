@@ -116,17 +116,22 @@
             }
 
             .section-publish {
-                border: 1px solid #000;
+                border: 1px solid #797472;
                 border-radius: 3px;
                 width: 95%;
+                height: 50px;
                 padding-top: 10px;
                 padding-bottom: 10px;
-                background-color: #fefeb8;
+                background-color: #797472;
             }
 
             .section-publish button {
                 width: 25%;
-                background-color: #fff;
+                height: 50px;
+                color: #fff;
+                background-color: #797472;
+                border: none;
+                margin-top: -11px;
             }
 
             .local-agenda {
@@ -144,7 +149,7 @@
             .local-agenda textarea {
                 width: 95%;
                 height: 30px;
-                font-size: 1.3em;
+                font-size: 1.2em;
             }
 
             .local-agenda button {
@@ -201,7 +206,7 @@
         <article id="janela-agenda" class="janela-agenda">
             <section class="section-publish">
                 <input type="text" id="texto_tarefa">
-                <button onclick="PublicarTarefa()">Publish</button>
+                <button onclick="PublicarTarefa()">Publish ></button>
             </section>
             <section class="local-agenda" id="local-agenda">
                 <button onclick="ApagarTarefa()">Apagar Tarefa</button>
@@ -232,10 +237,17 @@
                 Tarefas.push(texto_tarefa.value);
                 localStorage.tarefas = Tarefas;
 
-                let tarefa = document.createElement("textarea");
-                tarefa.value = ` ${texto_tarefa.value}`;
+                let tarefa = document.createElement("p");
+                tarefa.innerHTML = `> ${texto_tarefa.value}`;
                 local_agenda.appendChild(tarefa);
                 texto_tarefa.value = "";
+                
+                tarefa.style.textAlign = "left";
+                tarefa.style.marginLeft = "2%";
+                tarefa.style.marginBottom = "3px";
+                tarefa.style.fontSize = "0.8em";
+                tarefa.style.borderBottom = "1px solid #000";
+                tarefa.style.width = "95%";
             }
 
             function Agenda() {
@@ -259,9 +271,16 @@
                     Tarefas = storage.split(",");
 
                     for (let valor_tarefa of Tarefas) {
-                        let tarefa = document.createElement("textarea");
-                        tarefa.value = ` ${valor_tarefa}`;
+                        let tarefa = document.createElement("p");
+                        tarefa.innerHTML = `> ${valor_tarefa}`;
                         local_agenda.appendChild(tarefa);
+
+                        tarefa.style.textAlign = "left";
+                        tarefa.style.marginLeft = "2%";
+                        tarefa.style.marginBottom = "3px";
+                        tarefa.style.fontSize = "0.8em";
+                        tarefa.style.borderBottom = "1px solid #000";
+                        tarefa.style.width = "95%";
                     }
                 }
             }
